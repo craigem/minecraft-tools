@@ -19,7 +19,5 @@ basic-tests:
     - pep8 --show-source --show-pep8 ./
     - pylint ./*.py
     - nosetests
-  only:
-    - master
   tags:
     - python-2.7
