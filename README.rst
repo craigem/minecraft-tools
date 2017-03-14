@@ -17,6 +17,6 @@ japanese_house.py_ produces a Minecraft interpretation of a classice Japanese
 house. Presently it only produces the single configuration that is little more
 than an empty shell.
 
-.. _japanese_house.py: /craige/minecraft-tools/blob/master/japanese_house.py
+.. _japanese_house.py: https://git.mcwhirter.io/craige/minecraft-tools/blob/master/japanese_house.py
 
 .. image:: images/japanese_house_1.png
