@@ -17,6 +17,14 @@ japanese_house.py_ produces a Minecraft interpretation of a classice Japanese
 house. Presently it only produces the single configuration that is little more
 than an empty shell.
 
+**Caveats:**
+
+- Despite coding in the block data, all my stairs face South.
+- Despite coding in the block data, no torches will stick to walls.
+
+I'm presently unsure if this is *my* issue, or whether it lies further
+upstream.
+
 .. _japanese_house.py: https://git.mcwhirter.io/craige/minecraft-tools/blob/master/japanese_house.py
 
 .. image:: images/japanese_house_1.png
