@@ -28,3 +28,4 @@ upstream.
 .. _japanese_house.py: https://git.mcwhirter.io/craige/minecraft-tools/blob/master/japanese_house.py
 
 .. image:: images/japanese_house_1.png
+.. image:: images/japanese_house_2.png
