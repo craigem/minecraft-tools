@@ -16,7 +16,7 @@ stages:
 basic-tests:
   stage: test
   script:
-    - pep8 --show-source --show-pep8 ./
+    - pep8 --exclude=anyio,mcpi --show-source --show-pep8 ./
     - pylint ./*.py
     - nosetests
   only:
