@@ -1,531 +1,548 @@
+#!/usr/bin/python2.7
+
+''' japanese_house.py
+Produces a Minecraft interpretation of a classic Japanese house. Presently it
+only produces the single configuration that is little more than an empty shell.
+'''
+
 import mcpi.minecraft as minecraft
 import mcpi.block as block
 
-mc = minecraft.Minecraft.create()
+MC = minecraft.Minecraft.create()
 
-pos = mc.player.getTilePos()
+POS = MC.player.getTilePos()
 
 # House dimensions
-house_x = list(range(3, 20))
-house_z = list(range(-1, 12))
+HOUSE_X = list(range(3, 20))
+HOUSE_Z = list(range(-1, 12))
 # Floor
-grounds_y = pos.y - 1
-floor_y = pos.y
-verandah_size = 1
+GROUNDS_Y = POS.y - 1
+FLOOR_Y = POS.y
+VERANDAH_SIZE = 1
 
 # Set blocks
-grounds = block.GRASS.id
-flooring = block.DOUBLE_WOODEN_SLAB.id, 5
-poles = block.WOOD.id, 1
-panels = block.WOOL.id
-stairs = block.WOODEN_SLAB.id, 5
-#stairs = block.STAIRS_WOOD.id, 2, 1
-stairsEast = block.STAIRS_WOOD.id, 0
-stairsWest = block.STAIRS_WOOD.id, 1
-stairsSouth = block.STAIRS_WOOD.id, 2
-stairsNorth = block.STAIRS_WOOD.id, 3
-roofSlab = block.WOODEN_SLAB.id
-roofCorners = block.DOUBLE_WOODEN_SLAB.id, 0
-capstone = block.STONE_SLAB.id, 0
+GROUNDS = block.GRASS.id
+FLOORING = block.DOUBLE_WOODEN_SLAB.id, 5
+POLES = block.WOOD.id, 1
+PANELS = block.WOOL.id
+STAIRS = block.WOODEN_SLAB.id, 5
+ROOF_STAIRS_EAST = block.STAIRS_WOOD.id, 0
+ROOF_STAIRS_WEST = block.STAIRS_WOOD.id, 1
+ROOF_STAIRS_SOUTH = block.STAIRS_WOOD.id, 2
+ROOF_STAIRS_NORTH = block.STAIRS_WOOD.id, 3
+ROOF_SLAB = block.WOODEN_SLAB.id
+ROOF_CORNERS = block.DOUBLE_WOODEN_SLAB.id, 0
+CAPSTONE = block.STONE_SLAB.id, 0
 
 
 def clear_space():
-    # Clear a space by setting it to AIR
-    mc.setBlocks(
-        pos.x + house_x[0] - verandah_size - 3,
-        floor_y,
-        pos.z + house_z[0] - verandah_size - 3,
-        pos.x + house_x[-1] + verandah_size + 3,
-        floor_y + 100,
-        pos.z + house_z[-1] + verandah_size + 3,
+    ''' Clear a space for the house by setting it to AIR '''
+    MC.setBlocks(
+        POS.x + HOUSE_X[0] - VERANDAH_SIZE - 3,
+        FLOOR_Y,
+        POS.z + HOUSE_Z[0] - VERANDAH_SIZE - 3,
+        POS.x + HOUSE_X[-1] + VERANDAH_SIZE + 3,
+        FLOOR_Y + 100,
+        POS.z + HOUSE_Z[-1] + VERANDAH_SIZE + 3,
         block.AIR.id
         )
 
 
 def build_grounds():
-    # Build the grounds and gardens
-    mc.setBlocks(
-        pos.x + house_x[0] - verandah_size - 3,
-        grounds_y,
-        pos.z + house_z[0] - verandah_size - 3,
-        pos.x + house_x[-1] + verandah_size + 3,
-        grounds_y,
-        pos.z + house_z[-1] + verandah_size + 3,
-        grounds
+    ''' Build the grounds and gardens '''
+    MC.setBlocks(
+        POS.x + HOUSE_X[0] - VERANDAH_SIZE - 3,
+        GROUNDS_Y,
+        POS.z + HOUSE_Z[0] - VERANDAH_SIZE - 3,
+        POS.x + HOUSE_X[-1] + VERANDAH_SIZE + 3,
+        GROUNDS_Y,
+        POS.z + HOUSE_Z[-1] + VERANDAH_SIZE + 3,
+        GROUNDS
         )
 
 
 def build_floor():
-    # Build the floor and the verandah
-    mc.setBlocks(
-        pos.x + house_x[0] - verandah_size, floor_y, pos.z + house_z[0] - verandah_size,
-        pos.x + house_x[-1] + verandah_size, floor_y, pos.z + house_z[-1] + verandah_size,
-        flooring
+    ''' Build the floor and the verandah '''
+    MC.setBlocks(
+        POS.x + HOUSE_X[0] - VERANDAH_SIZE,
+        FLOOR_Y,
+        POS.z + HOUSE_Z[0] - VERANDAH_SIZE,
+        POS.x + HOUSE_X[-1] + VERANDAH_SIZE,
+        FLOOR_Y,
+        POS.z + HOUSE_Z[-1] + VERANDAH_SIZE,
+        FLOORING
         )
 
 
 def house_posts():
-    # Set out the house poles by making the entire walls poles, the carve away
-    # what we don't need later.
-    post_y_bottom = floor_y + 1
-    post_y_top = floor_y + 4
+    ''' Set out the house poles by making the entire walls poles, the carve
+    away what we don't need later.
+    '''
+    post_y_bottom = FLOOR_Y + 1
+    post_y_top = FLOOR_Y + 4
     # West posts:
-    mc.setBlocks(
-        pos.x + house_x[0], post_y_bottom, pos.z + house_z[0],
-        pos.x + house_x[0], post_y_top, pos.z + house_z[-1],
-        poles
+    MC.setBlocks(
+        POS.x + HOUSE_X[0], post_y_bottom, POS.z + HOUSE_Z[0],
+        POS.x + HOUSE_X[0], post_y_top, POS.z + HOUSE_Z[-1],
+        POLES
         )
     # East posts:
-    mc.setBlocks(
-        pos.x + house_x[-1], post_y_bottom, pos.z + house_z[0],
-        pos.x + house_x[-1], post_y_top, pos.z + house_z[-1],
-        poles
+    MC.setBlocks(
+        POS.x + HOUSE_X[-1], post_y_bottom, POS.z + HOUSE_Z[0],
+        POS.x + HOUSE_X[-1], post_y_top, POS.z + HOUSE_Z[-1],
+        POLES
         )
     # North posts:
-    mc.setBlocks(
-        pos.x + house_x[0], post_y_bottom, pos.z + house_z[0],
-        pos.x + house_x[-1], post_y_top, pos.z + house_z[0],
-        poles
+    MC.setBlocks(
+        POS.x + HOUSE_X[0], post_y_bottom, POS.z + HOUSE_Z[0],
+        POS.x + HOUSE_X[-1], post_y_top, POS.z + HOUSE_Z[0],
+        POLES
         )
     # South posts:
-    mc.setBlocks(
-        pos.x + house_x[0], post_y_bottom, pos.z + house_z[-1],
-        pos.x + house_x[-1], post_y_top, pos.z + house_z[-1],
-        poles
+    MC.setBlocks(
+        POS.x + HOUSE_X[0], post_y_bottom, POS.z + HOUSE_Z[-1],
+        POS.x + HOUSE_X[-1], post_y_top, POS.z + HOUSE_Z[-1],
+        POLES
         )
 
 
 def wall_panels():
-    panel_y_bottom = floor_y + 1
-    panel_y_top = floor_y + 3
+    ''' Build the wall panels for the ground floor '''
+    panel_y_bottom = FLOOR_Y + 1
+    panel_y_top = FLOOR_Y + 3
     # West Panels
-    mc.setBlocks(
-        pos.x + house_x[0], panel_y_bottom, pos.z + house_z[1],
-        pos.x + house_x[0], panel_y_top, pos.z + house_z[3],
-        panels
+    MC.setBlocks(
+        POS.x + HOUSE_X[0], panel_y_bottom, POS.z + HOUSE_Z[1],
+        POS.x + HOUSE_X[0], panel_y_top, POS.z + HOUSE_Z[3],
+        PANELS
         )
-    mc.setBlocks(
-        pos.x + house_x[0], panel_y_bottom, pos.z + house_z[5],
-        pos.x + house_x[0], panel_y_top, pos.z + house_z[7],
-        panels
+    MC.setBlocks(
+        POS.x + HOUSE_X[0], panel_y_bottom, POS.z + HOUSE_Z[5],
+        POS.x + HOUSE_X[0], panel_y_top, POS.z + HOUSE_Z[7],
+        PANELS
         )
-    mc.setBlocks(
-        pos.x + house_x[0], panel_y_bottom, pos.z + house_z[9],
-        pos.x + house_x[0], panel_y_top, pos.z + house_z[11],
-        panels
+    MC.setBlocks(
+        POS.x + HOUSE_X[0], panel_y_bottom, POS.z + HOUSE_Z[9],
+        POS.x + HOUSE_X[0], panel_y_top, POS.z + HOUSE_Z[11],
+        PANELS
         )
     # East Panels
-    mc.setBlocks(
-        pos.x + house_x[-1], panel_y_bottom, pos.z + house_z[1],
-        pos.x + house_x[-1], panel_y_top, pos.z + house_z[3],
-        panels
+    MC.setBlocks(
+        POS.x + HOUSE_X[-1], panel_y_bottom, POS.z + HOUSE_Z[1],
+        POS.x + HOUSE_X[-1], panel_y_top, POS.z + HOUSE_Z[3],
+        PANELS
         )
-    mc.setBlocks(
-        pos.x + house_x[-1], panel_y_bottom, pos.z + house_z[5],
-        pos.x + house_x[-1], panel_y_top, pos.z + house_z[7],
-        panels
+    MC.setBlocks(
+        POS.x + HOUSE_X[-1], panel_y_bottom, POS.z + HOUSE_Z[5],
+        POS.x + HOUSE_X[-1], panel_y_top, POS.z + HOUSE_Z[7],
+        PANELS
         )
-    mc.setBlocks(
-        pos.x + house_x[-1], panel_y_bottom, pos.z + house_z[9],
-        pos.x + house_x[-1], panel_y_top, pos.z + house_z[11],
-        panels
+    MC.setBlocks(
+        POS.x + HOUSE_X[-1], panel_y_bottom, POS.z + HOUSE_Z[9],
+        POS.x + HOUSE_X[-1], panel_y_top, POS.z + HOUSE_Z[11],
+        PANELS
         )
     # North Panels
-    mc.setBlocks(
-        pos.x + house_x[1], panel_y_bottom, pos.z + house_z[0],
-        pos.x + house_x[3], panel_y_top, pos.z + house_z[0],
-        panels
+    MC.setBlocks(
+        POS.x + HOUSE_X[1], panel_y_bottom, POS.z + HOUSE_Z[0],
+        POS.x + HOUSE_X[3], panel_y_top, POS.z + HOUSE_Z[0],
+        PANELS
         )
-    mc.setBlocks(
-        pos.x + house_x[5], panel_y_bottom, pos.z + house_z[0],
-        pos.x + house_x[7], panel_y_top, pos.z + house_z[0],
-        panels
+    MC.setBlocks(
+        POS.x + HOUSE_X[5], panel_y_bottom, POS.z + HOUSE_Z[0],
+        POS.x + HOUSE_X[7], panel_y_top, POS.z + HOUSE_Z[0],
+        PANELS
         )
-    mc.setBlocks(
-        pos.x + house_x[9], panel_y_bottom, pos.z + house_z[0],
-        pos.x + house_x[11], panel_y_top, pos.z + house_z[0],
-        panels
+    MC.setBlocks(
+        POS.x + HOUSE_X[9], panel_y_bottom, POS.z + HOUSE_Z[0],
+        POS.x + HOUSE_X[11], panel_y_top, POS.z + HOUSE_Z[0],
+        PANELS
         )
-    mc.setBlocks(
-        pos.x + house_x[13], panel_y_bottom, pos.z + house_z[0],
-        pos.x + house_x[15], panel_y_top, pos.z + house_z[0],
-        panels
+    MC.setBlocks(
+        POS.x + HOUSE_X[13], panel_y_bottom, POS.z + HOUSE_Z[0],
+        POS.x + HOUSE_X[15], panel_y_top, POS.z + HOUSE_Z[0],
+        PANELS
         )
     # South panels:
-    mc.setBlocks(
-        pos.x + house_x[1], panel_y_bottom, pos.z + house_z[-1],
-        pos.x + house_x[3], panel_y_top, pos.z + house_z[-1],
-        panels
+    MC.setBlocks(
+        POS.x + HOUSE_X[1], panel_y_bottom, POS.z + HOUSE_Z[-1],
+        POS.x + HOUSE_X[3], panel_y_top, POS.z + HOUSE_Z[-1],
+        PANELS
         )
-    mc.setBlocks(
-        pos.x + house_x[5], panel_y_bottom, pos.z + house_z[-1],
-        pos.x + house_x[7], panel_y_top, pos.z + house_z[-1],
-        panels
+    MC.setBlocks(
+        POS.x + HOUSE_X[5], panel_y_bottom, POS.z + HOUSE_Z[-1],
+        POS.x + HOUSE_X[7], panel_y_top, POS.z + HOUSE_Z[-1],
+        PANELS
         )
-    mc.setBlocks(
-        pos.x + house_x[9], panel_y_bottom, pos.z + house_z[-1],
-        pos.x + house_x[11], panel_y_top, pos.z + house_z[-1],
-        panels
+    MC.setBlocks(
+        POS.x + HOUSE_X[9], panel_y_bottom, POS.z + HOUSE_Z[-1],
+        POS.x + HOUSE_X[11], panel_y_top, POS.z + HOUSE_Z[-1],
+        PANELS
         )
-    mc.setBlocks(
-        pos.x + house_x[13], panel_y_bottom, pos.z + house_z[-1],
-        pos.x + house_x[15], panel_y_top, pos.z + house_z[-1],
-        panels
+    MC.setBlocks(
+        POS.x + HOUSE_X[13], panel_y_bottom, POS.z + HOUSE_Z[-1],
+        POS.x + HOUSE_X[15], panel_y_top, POS.z + HOUSE_Z[-1],
+        PANELS
         )
-    mc.setBlocks(
-        pos.x + house_x[1], panel_y_bottom, pos.z + house_z[-1],
-        pos.x + house_x[3], panel_y_top, pos.z + house_z[-1],
-        panels
+    MC.setBlocks(
+        POS.x + HOUSE_X[1], panel_y_bottom, POS.z + HOUSE_Z[-1],
+        POS.x + HOUSE_X[3], panel_y_top, POS.z + HOUSE_Z[-1],
+        PANELS
         )
 
 
 def door():
-    mc.setBlocks(
-        pos.x + 3, pos.y + 1, pos.z + 5,
-        pos.x + 3, pos.y + 2, pos.z + 5,
+    ''' Every home needs a door, lets carve one right here, in the centre of
+    the west side
+    '''
+    MC.setBlocks(
+        POS.x + 3, POS.y + 1, POS.z + 5,
+        POS.x + 3, POS.y + 2, POS.z + 5,
         block.AIR.id
         )
 
 
 def verandah_stairs():
-    # Define the stairs as area and let everything running later clobber it.
-    mc.setBlocks(
-        pos.x + house_x[0] - verandah_size - 1,
-        floor_y,
-        pos.z + house_z[0] - verandah_size - 1,
-        pos.x + house_x[-1] + verandah_size + 1,
-        floor_y,
-        pos.z + house_z[-1] + verandah_size + 1,
-        stairs
+    ''' Define the stairs as area and let everything running later clobber it.
+    '''
+    MC.setBlocks(
+        POS.x + HOUSE_X[0] - VERANDAH_SIZE - 1,
+        FLOOR_Y,
+        POS.z + HOUSE_Z[0] - VERANDAH_SIZE - 1,
+        POS.x + HOUSE_X[-1] + VERANDAH_SIZE + 1,
+        FLOOR_Y,
+        POS.z + HOUSE_Z[-1] + VERANDAH_SIZE + 1,
+        STAIRS
         )
 
 
 def lower_roof():
-    # Build the lower roof
-    lowerRoofCorners = block.WOOD_PLANKS.id, 0
-    lowerRoofStairsEast = block.STAIRS_WOOD.id, 0
-    lowerRoofStairsWest = block.STAIRS_WOOD.id, 1
-    lowerRoofStairsSouth = block.STAIRS_WOOD.id, 2
-    lowerRoofStairsNorth = block.STAIRS_WOOD.id, 3
-    lowerRoofSlab = block.WOODEN_SLAB.id
-    lowerRoof_y = floor_y + 4
+    ''' Build the lower roof '''
+    lower_roof_y = FLOOR_Y + 4
     # Inner row
     # Set a wood block on each corner
     # North West corner
-    mc.setBlock(
-        pos.x + house_x[0] - 1, lowerRoof_y, pos.z + house_z[0] - 1,
-        lowerRoofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[0] - 1, lower_roof_y, POS.z + HOUSE_Z[0] - 1,
+        ROOF_CORNERS
         )
     # South West corner
-    mc.setBlock(
-        pos.x + house_x[0] - 1, lowerRoof_y, pos.z + house_z[-1] + 1,
-        lowerRoofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[0] - 1, lower_roof_y, POS.z + HOUSE_Z[-1] + 1,
+        ROOF_CORNERS
         )
     # North East corner
-    mc.setBlock(
-        pos.x + house_x[-1] + 1, lowerRoof_y, pos.z + house_z[0] - 1,
-        lowerRoofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[-1] + 1, lower_roof_y, POS.z + HOUSE_Z[0] - 1,
+        ROOF_CORNERS
         )
     # South East corner
-    mc.setBlock(
-        pos.x + house_x[-1] + 1, lowerRoof_y, pos.z + house_z[-1] + 1,
-        lowerRoofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[-1] + 1, lower_roof_y, POS.z + HOUSE_Z[-1] + 1,
+        ROOF_CORNERS
         )
     # Set outward facing stairs in between
     # Western roofing stairs
-    mc.setBlocks(
-        pos.x + house_x[0] - 1, lowerRoof_y, pos.z + house_z[0],
-        pos.x + house_x[0] - 1, lowerRoof_y, pos.z + house_z[-1],
-        lowerRoofStairsWest
+    MC.setBlocks(
+        POS.x + HOUSE_X[0] - 1, lower_roof_y, POS.z + HOUSE_Z[0],
+        POS.x + HOUSE_X[0] - 1, lower_roof_y, POS.z + HOUSE_Z[-1],
+        ROOF_STAIRS_WEST
         )
     # Northern roofing stairs
-    mc.setBlocks(
-        pos.x + house_x[0], lowerRoof_y, pos.z + house_z[0] - 1,
-        pos.x + house_x[-1], lowerRoof_y, pos.z + house_z[0] - 1,
-        lowerRoofStairsNorth
+    MC.setBlocks(
+        POS.x + HOUSE_X[0], lower_roof_y, POS.z + HOUSE_Z[0] - 1,
+        POS.x + HOUSE_X[-1], lower_roof_y, POS.z + HOUSE_Z[0] - 1,
+        ROOF_STAIRS_NORTH
         )
     # Eastern roofing stairs
-    mc.setBlocks(
-        pos.x + house_x[-1] + 1, lowerRoof_y, pos.z + house_z[0],
-        pos.x + house_x[-1] + 1, lowerRoof_y, pos.z + house_z[-1],
-        lowerRoofStairsEast
+    MC.setBlocks(
+        POS.x + HOUSE_X[-1] + 1, lower_roof_y, POS.z + HOUSE_Z[0],
+        POS.x + HOUSE_X[-1] + 1, lower_roof_y, POS.z + HOUSE_Z[-1],
+        ROOF_STAIRS_EAST
         )
     # Southern roofing stairs
-    mc.setBlocks(
-        pos.x + house_x[0], lowerRoof_y, pos.z + house_z[-1] + 1,
-        pos.x + house_x[-1], lowerRoof_y, pos.z + house_z[-1] + 1,
-        lowerRoofStairsSouth
+    MC.setBlocks(
+        POS.x + HOUSE_X[0], lower_roof_y, POS.z + HOUSE_Z[-1] + 1,
+        POS.x + HOUSE_X[-1], lower_roof_y, POS.z + HOUSE_Z[-1] + 1,
+        ROOF_STAIRS_SOUTH
         )
     # Middle row
     # Set a wood block on each corner
     # North West corner
-    mc.setBlock(
-        pos.x + house_x[0] - 2, lowerRoof_y, pos.z + house_z[0] - 2,
-        lowerRoofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[0] - 2, lower_roof_y, POS.z + HOUSE_Z[0] - 2,
+        ROOF_CORNERS
         )
     # South West corner
-    mc.setBlock(
-        pos.x + house_x[0] - 2, lowerRoof_y, pos.z + house_z[-1] + 2,
-        lowerRoofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[0] - 2, lower_roof_y, POS.z + HOUSE_Z[-1] + 2,
+        ROOF_CORNERS
         )
     # North East corner
-    mc.setBlock(
-        pos.x + house_x[-1] + 2, lowerRoof_y, pos.z + house_z[0] - 2,
-        lowerRoofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[-1] + 2, lower_roof_y, POS.z + HOUSE_Z[0] - 2,
+        ROOF_CORNERS
         )
     # South East corner
-    mc.setBlock(
-        pos.x + house_x[-1] + 2, lowerRoof_y, pos.z + house_z[-1] + 2,
-        lowerRoofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[-1] + 2, lower_roof_y, POS.z + HOUSE_Z[-1] + 2,
+        ROOF_CORNERS
         )
     # Set single wood slabs in between
     # Western roofing slabs
-    mc.setBlocks(
-        pos.x + house_x[0] - 2, lowerRoof_y, pos.z + house_z[0] - 1,
-        pos.x + house_x[0] - 2, lowerRoof_y, pos.z + house_z[-1] + 1,
-        lowerRoofSlab
+    MC.setBlocks(
+        POS.x + HOUSE_X[0] - 2, lower_roof_y, POS.z + HOUSE_Z[0] - 1,
+        POS.x + HOUSE_X[0] - 2, lower_roof_y, POS.z + HOUSE_Z[-1] + 1,
+        ROOF_SLAB
         )
     # Northern roofing slabs
-    mc.setBlocks(
-        pos.x + house_x[0] - 1 , lowerRoof_y, pos.z + house_z[0] - 2,
-        pos.x + house_x[-1] + 1, lowerRoof_y, pos.z + house_z[0] - 2,
-        lowerRoofSlab
+    MC.setBlocks(
+        POS.x + HOUSE_X[0] - 1, lower_roof_y, POS.z + HOUSE_Z[0] - 2,
+        POS.x + HOUSE_X[-1] + 1, lower_roof_y, POS.z + HOUSE_Z[0] - 2,
+        ROOF_SLAB
         )
     # Eastern roofing slabs
-    mc.setBlocks(
-        pos.x + house_x[-1] + 2, lowerRoof_y, pos.z + house_z[0] - 1,
-        pos.x + house_x[-1] + 2, lowerRoof_y, pos.z + house_z[-1] + 1,
-        lowerRoofSlab
+    MC.setBlocks(
+        POS.x + HOUSE_X[-1] + 2, lower_roof_y, POS.z + HOUSE_Z[0] - 1,
+        POS.x + HOUSE_X[-1] + 2, lower_roof_y, POS.z + HOUSE_Z[-1] + 1,
+        ROOF_SLAB
         )
     # Southern roofing slabs
-    mc.setBlocks(
-        pos.x + house_x[0] - 1, lowerRoof_y, pos.z + house_z[-1] + 2,
-        pos.x + house_x[-1] + 1, lowerRoof_y, pos.z + house_z[-1] + 2,
-        lowerRoofSlab
+    MC.setBlocks(
+        POS.x + HOUSE_X[0] - 1, lower_roof_y, POS.z + HOUSE_Z[-1] + 2,
+        POS.x + HOUSE_X[-1] + 1, lower_roof_y, POS.z + HOUSE_Z[-1] + 2,
+        ROOF_SLAB
         )
     # Upper row
     # Set a wood block on each corner
     # North West corner
-    upperRow_y = lowerRoof_y + 1
-    mc.setBlock(
-        pos.x + house_x[0], upperRow_y, pos.z + house_z[0],
-        lowerRoofSlab
+    upper_row_y = lower_roof_y + 1
+    MC.setBlock(
+        POS.x + HOUSE_X[0], upper_row_y, POS.z + HOUSE_Z[0],
+        ROOF_SLAB
         )
     # South West corner
-    mc.setBlock(
-        pos.x + house_x[0], upperRow_y, pos.z + house_z[-1],
-        lowerRoofSlab
+    MC.setBlock(
+        POS.x + HOUSE_X[0], upper_row_y, POS.z + HOUSE_Z[-1],
+        ROOF_SLAB
         )
     # North East corner
-    mc.setBlock(
-        pos.x + house_x[-1], upperRow_y, pos.z + house_z[0],
-        lowerRoofSlab
+    MC.setBlock(
+        POS.x + HOUSE_X[-1], upper_row_y, POS.z + HOUSE_Z[0],
+        ROOF_SLAB
         )
     # South East corner
-    mc.setBlock(
-        pos.x + house_x[-1], upperRow_y, pos.z + house_z[-1],
-        lowerRoofSlab
+    MC.setBlock(
+        POS.x + HOUSE_X[-1], upper_row_y, POS.z + HOUSE_Z[-1],
+        ROOF_SLAB
         )
     # Set single wood slabs in between
     # Western roofing slabs
-    mc.setBlocks(
-        pos.x + house_x[0], upperRow_y, pos.z + house_z[1],
-        pos.x + house_x[0], upperRow_y, pos.z + house_z[-2],
-        lowerRoofStairsWest
+    MC.setBlocks(
+        POS.x + HOUSE_X[0], upper_row_y, POS.z + HOUSE_Z[1],
+        POS.x + HOUSE_X[0], upper_row_y, POS.z + HOUSE_Z[-2],
+        ROOF_STAIRS_WEST
         )
     # Northern roofing slabs
-    mc.setBlocks(
-        pos.x + house_x[1], upperRow_y, pos.z + house_z[0],
-        pos.x + house_x[-2], upperRow_y, pos.z + house_z[0],
-        lowerRoofStairsNorth
+    MC.setBlocks(
+        POS.x + HOUSE_X[1], upper_row_y, POS.z + HOUSE_Z[0],
+        POS.x + HOUSE_X[-2], upper_row_y, POS.z + HOUSE_Z[0],
+        ROOF_STAIRS_NORTH
         )
     # Eastern roofing slabs
-    mc.setBlocks(
-        pos.x + house_x[-1], upperRow_y, pos.z + house_z[1],
-        pos.x + house_x[-1], upperRow_y, pos.z + house_z[-2],
-        lowerRoofStairsEast
+    MC.setBlocks(
+        POS.x + HOUSE_X[-1], upper_row_y, POS.z + HOUSE_Z[1],
+        POS.x + HOUSE_X[-1], upper_row_y, POS.z + HOUSE_Z[-2],
+        ROOF_STAIRS_EAST
         )
     # Southern roofing slabs
-    mc.setBlocks(
-        pos.x + house_x[1], upperRow_y, pos.z + house_z[-1],
-        pos.x + house_x[-2], upperRow_y, pos.z + house_z[-1],
-        lowerRoofStairsSouth
+    MC.setBlocks(
+        POS.x + HOUSE_X[1], upper_row_y, POS.z + HOUSE_Z[-1],
+        POS.x + HOUSE_X[-2], upper_row_y, POS.z + HOUSE_Z[-1],
+        ROOF_STAIRS_SOUTH
         )
 
+
 def upper_level():
-    # Build the mezzanine level
+    ''' Build the mezzanine level '''
     # The floor of the mezzanine level
-    upperLevel_y = floor_y + 5
-    mc.setBlocks(
-        pos.x + house_x[1], upperLevel_y, pos.z + house_z[1],
-        pos.x + house_x[-2], upperLevel_y, pos.z + house_z[-2],
+    upper_level_y = FLOOR_Y + 5
+    MC.setBlocks(
+        POS.x + HOUSE_X[1], upper_level_y, POS.z + HOUSE_Z[1],
+        POS.x + HOUSE_X[-2], upper_level_y, POS.z + HOUSE_Z[-2],
         block.DOUBLE_WOODEN_SLAB.id, 1
         )
     # The upper floor wall
-    mc.setBlocks(
-        pos.x + house_x[1], upperLevel_y + 1, pos.z + house_z[1],
-        pos.x + house_x[-2], upperLevel_y + 1, pos.z + house_z[-2],
-        poles
+    MC.setBlocks(
+        POS.x + HOUSE_X[1], upper_level_y + 1, POS.z + HOUSE_Z[1],
+        POS.x + HOUSE_X[-2], upper_level_y + 1, POS.z + HOUSE_Z[-2],
+        POLES
         )
     # The upper floor roof
-    mc.setBlocks(
-        pos.x + house_x[1] - 2, upperLevel_y + 2, pos.z + house_z[1] - 2,
-        pos.x + house_x[-2] + 2, upperLevel_y + 2, pos.z + house_z[-2] + 2,
-        roofSlab
+    MC.setBlocks(
+        POS.x + HOUSE_X[1] - 2, upper_level_y + 2, POS.z + HOUSE_Z[1] - 2,
+        POS.x + HOUSE_X[-2] + 2, upper_level_y + 2, POS.z + HOUSE_Z[-2] + 2,
+        ROOF_SLAB
         )
     # The upper floor roof stairs
-    mc.setBlocks(
-        pos.x + house_x[1], upperLevel_y + 2, pos.z + house_z[1],
-        pos.x + house_x[-2], upperLevel_y + 2, pos.z + house_z[-2],
-        stairsNorth
+    MC.setBlocks(
+        POS.x + HOUSE_X[1], upper_level_y + 2, POS.z + HOUSE_Z[1],
+        POS.x + HOUSE_X[-2], upper_level_y + 2, POS.z + HOUSE_Z[-2],
+        ROOF_STAIRS_NORTH
         )
     # Clear the upper floor
-    mc.setBlocks(
-        pos.x + house_x[2], upperLevel_y + 1, pos.z + house_z[2],
-        pos.x + house_x[-3], upperLevel_y + 2, pos.z + house_z[-3],
+    MC.setBlocks(
+        POS.x + HOUSE_X[2], upper_level_y + 1, POS.z + HOUSE_Z[2],
+        POS.x + HOUSE_X[-3], upper_level_y + 2, POS.z + HOUSE_Z[-3],
         block.AIR.id
         )
     # Add the decorative corner blocks
     # Northwest corner
-    mc.setBlock(
-        pos.x + house_x[1], upperLevel_y + 2, pos.z + house_z[1], roofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[1], upper_level_y + 2, POS.z + HOUSE_Z[1], ROOF_CORNERS
         )
-    mc.setBlock(
-        pos.x + house_x[0], upperLevel_y + 2, pos.z + house_z[0], roofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[0], upper_level_y + 2, POS.z + HOUSE_Z[0], ROOF_CORNERS
         )
-    mc.setBlock(
-        pos.x + house_x[0] - 1, upperLevel_y + 2, pos.z + house_z[0] - 1, roofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[0] - 1, upper_level_y + 2, POS.z + HOUSE_Z[0] - 1,
+        ROOF_CORNERS
         )
     # Southwest corner
-    mc.setBlock(
-        pos.x + house_x[1], upperLevel_y + 2, pos.z + house_z[-2], roofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[1], upper_level_y + 2, POS.z + HOUSE_Z[-2], ROOF_CORNERS
         )
-    mc.setBlock(
-        pos.x + house_x[0], upperLevel_y + 2, pos.z + house_z[-1], roofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[0], upper_level_y + 2, POS.z + HOUSE_Z[-1], ROOF_CORNERS
         )
-    mc.setBlock(
-        pos.x + house_x[0] - 1, upperLevel_y + 2, pos.z + house_z[-1] + 1, roofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[0] - 1, upper_level_y + 2, POS.z + HOUSE_Z[-1] + 1,
+        ROOF_CORNERS
         )
     # Northeast corner
-    mc.setBlock(
-        pos.x + house_x[-2], upperLevel_y + 2, pos.z + house_z[1],roofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[-2], upper_level_y + 2, POS.z + HOUSE_Z[1], ROOF_CORNERS
         )
-    mc.setBlock(
-        pos.x + house_x[-1], upperLevel_y + 2, pos.z + house_z[0], roofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[-1], upper_level_y + 2, POS.z + HOUSE_Z[0], ROOF_CORNERS
         )
-    mc.setBlock(
-        pos.x + house_x[-1] + 1, upperLevel_y + 2, pos.z + house_z[0] - 1, roofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[-1] + 1, upper_level_y + 2, POS.z + HOUSE_Z[0] - 1,
+        ROOF_CORNERS
         )
     # Southeast corner
-    mc.setBlock(
-        pos.x + house_x[-2], upperLevel_y + 2, pos.z + house_z[-2],roofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[-2], upper_level_y + 2, POS.z + HOUSE_Z[-2],
+        ROOF_CORNERS
         )
-    mc.setBlock(
-        pos.x + house_x[-1], upperLevel_y + 2, pos.z + house_z[-1], roofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[-1], upper_level_y + 2, POS.z + HOUSE_Z[-1],
+        ROOF_CORNERS
         )
-    mc.setBlock(
-        pos.x + house_x[-1] + 1, upperLevel_y + 2, pos.z + house_z[-1] + 1, roofCorners
+    MC.setBlock(
+        POS.x + HOUSE_X[-1] + 1, upper_level_y + 2, POS.z + HOUSE_Z[-1] + 1,
+        ROOF_CORNERS
         )
     # Build the upper panels
-    mc.setBlocks(
-        pos.x + house_x[2], upperLevel_y + 1, pos.z + house_z[4],
-        pos.x + house_x[-3], upperLevel_y + 5, pos.z + house_z[5],
-        panels
+    MC.setBlocks(
+        POS.x + HOUSE_X[2], upper_level_y + 1, POS.z + HOUSE_Z[4],
+        POS.x + HOUSE_X[-3], upper_level_y + 5, POS.z + HOUSE_Z[5],
+        PANELS
         )
-    mc.setBlocks(
-        pos.x + house_x[2], upperLevel_y + 1, pos.z + house_z[-6],
-        pos.x + house_x[-3], upperLevel_y + 5, pos.z + house_z[-5],
-        panels
+    MC.setBlocks(
+        POS.x + HOUSE_X[2], upper_level_y + 1, POS.z + HOUSE_Z[-6],
+        POS.x + HOUSE_X[-3], upper_level_y + 5, POS.z + HOUSE_Z[-5],
+        PANELS
         )
     # Build the upper posts
-    mc.setBlocks(
-        pos.x + house_x[2], upperLevel_y + 1, pos.z + house_z[2],
-        pos.x + house_x[-3], upperLevel_y + 2, pos.z + house_z[2],
-        poles
+    MC.setBlocks(
+        POS.x + HOUSE_X[2], upper_level_y + 1, POS.z + HOUSE_Z[2],
+        POS.x + HOUSE_X[-3], upper_level_y + 2, POS.z + HOUSE_Z[2],
+        POLES
         )
-    mc.setBlocks(
-        pos.x + house_x[2], upperLevel_y + 1, pos.z + house_z[3],
-        pos.x + house_x[-3], upperLevel_y + 3, pos.z + house_z[3],
-        poles
+    MC.setBlocks(
+        POS.x + HOUSE_X[2], upper_level_y + 1, POS.z + HOUSE_Z[3],
+        POS.x + HOUSE_X[-3], upper_level_y + 3, POS.z + HOUSE_Z[3],
+        POLES
         )
-    mc.setBlocks(
-        pos.x + house_x[2], upperLevel_y + 1, pos.z + house_z[6],
-        pos.x + house_x[-3], upperLevel_y + 6, pos.z + house_z[6],
-        poles
+    MC.setBlocks(
+        POS.x + HOUSE_X[2], upper_level_y + 1, POS.z + HOUSE_Z[6],
+        POS.x + HOUSE_X[-3], upper_level_y + 6, POS.z + HOUSE_Z[6],
+        POLES
         )
-    mc.setBlocks(
-        pos.x + house_x[2], upperLevel_y + 1, pos.z + house_z[-4],
-        pos.x + house_x[-3], upperLevel_y + 3, pos.z + house_z[-4],
-        poles
+    MC.setBlocks(
+        POS.x + HOUSE_X[2], upper_level_y + 1, POS.z + HOUSE_Z[-4],
+        POS.x + HOUSE_X[-3], upper_level_y + 3, POS.z + HOUSE_Z[-4],
+        POLES
         )
-    mc.setBlocks(
-        pos.x + house_x[2], upperLevel_y + 1, pos.z + house_z[-3],
-        pos.x + house_x[-3], upperLevel_y + 2, pos.z + house_z[-3],
-        poles
+    MC.setBlocks(
+        POS.x + HOUSE_X[2], upper_level_y + 1, POS.z + HOUSE_Z[-3],
+        POS.x + HOUSE_X[-3], upper_level_y + 2, POS.z + HOUSE_Z[-3],
+        POLES
         )
     # Clear the upper floor
-    mc.setBlocks(
-        pos.x + house_x[3], upperLevel_y + 1, pos.z + house_z[2],
-        pos.x + house_x[-4], upperLevel_y + 6, pos.z + house_z[-3],
+    MC.setBlocks(
+        POS.x + HOUSE_X[3], upper_level_y + 1, POS.z + HOUSE_Z[2],
+        POS.x + HOUSE_X[-4], upper_level_y + 6, POS.z + HOUSE_Z[-3],
         block.AIR.id
         )
     # Put the north roof on
-    mc.setBlocks(
-        pos.x + house_x[1], upperLevel_y + 3, pos.z + house_z[2],
-        pos.x + house_x[-2], upperLevel_y + 3, pos.z + house_z[2],
-        stairsNorth
+    MC.setBlocks(
+        POS.x + HOUSE_X[1], upper_level_y + 3, POS.z + HOUSE_Z[2],
+        POS.x + HOUSE_X[-2], upper_level_y + 3, POS.z + HOUSE_Z[2],
+        ROOF_STAIRS_NORTH
         )
-    mc.setBlocks(
-        pos.x + house_x[1], upperLevel_y + 4, pos.z + house_z[3],
-        pos.x + house_x[-2], upperLevel_y + 4, pos.z + house_z[3],
-        stairsNorth
+    MC.setBlocks(
+        POS.x + HOUSE_X[1], upper_level_y + 4, POS.z + HOUSE_Z[3],
+        POS.x + HOUSE_X[-2], upper_level_y + 4, POS.z + HOUSE_Z[3],
+        ROOF_STAIRS_NORTH
         )
-    mc.setBlocks(
-        pos.x + house_x[1], upperLevel_y + 5, pos.z + house_z[4],
-        pos.x + house_x[-2], upperLevel_y + 5, pos.z + house_z[4],
-        stairsNorth
+    MC.setBlocks(
+        POS.x + HOUSE_X[1], upper_level_y + 5, POS.z + HOUSE_Z[4],
+        POS.x + HOUSE_X[-2], upper_level_y + 5, POS.z + HOUSE_Z[4],
+        ROOF_STAIRS_NORTH
         )
-    mc.setBlocks(
-        pos.x + house_x[1], upperLevel_y + 6, pos.z + house_z[5],
-        pos.x + house_x[-2], upperLevel_y + 6, pos.z + house_z[5],
-        stairsNorth
+    MC.setBlocks(
+        POS.x + HOUSE_X[1], upper_level_y + 6, POS.z + HOUSE_Z[5],
+        POS.x + HOUSE_X[-2], upper_level_y + 6, POS.z + HOUSE_Z[5],
+        ROOF_STAIRS_NORTH
         )
     # Put the South roof on
-    mc.setBlocks(
-        pos.x + house_x[1], upperLevel_y + 3, pos.z + house_z[-3],
-        pos.x + house_x[-2], upperLevel_y + 3, pos.z + house_z[-3],
-        stairsSouth
+    MC.setBlocks(
+        POS.x + HOUSE_X[1], upper_level_y + 3, POS.z + HOUSE_Z[-3],
+        POS.x + HOUSE_X[-2], upper_level_y + 3, POS.z + HOUSE_Z[-3],
+        ROOF_STAIRS_SOUTH
         )
-    mc.setBlocks(
-        pos.x + house_x[1], upperLevel_y + 4, pos.z + house_z[-4],
-        pos.x + house_x[-2], upperLevel_y + 4, pos.z + house_z[-4],
-        stairsSouth
+    MC.setBlocks(
+        POS.x + HOUSE_X[1], upper_level_y + 4, POS.z + HOUSE_Z[-4],
+        POS.x + HOUSE_X[-2], upper_level_y + 4, POS.z + HOUSE_Z[-4],
+        ROOF_STAIRS_SOUTH
         )
-    mc.setBlocks(
-        pos.x + house_x[1], upperLevel_y + 5, pos.z + house_z[-5],
-        pos.x + house_x[-2], upperLevel_y + 5, pos.z + house_z[-5],
-        stairsSouth
+    MC.setBlocks(
+        POS.x + HOUSE_X[1], upper_level_y + 5, POS.z + HOUSE_Z[-5],
+        POS.x + HOUSE_X[-2], upper_level_y + 5, POS.z + HOUSE_Z[-5],
+        ROOF_STAIRS_SOUTH
         )
-    mc.setBlocks(
-        pos.x + house_x[1], upperLevel_y + 6, pos.z + house_z[-6],
-        pos.x + house_x[-2], upperLevel_y + 6, pos.z + house_z[-6],
-        stairsSouth
+    MC.setBlocks(
+        POS.x + HOUSE_X[1], upper_level_y + 6, POS.z + HOUSE_Z[-6],
+        POS.x + HOUSE_X[-2], upper_level_y + 6, POS.z + HOUSE_Z[-6],
+        ROOF_STAIRS_SOUTH
         )
-    # Set the capstone
-    mc.setBlocks(
-        pos.x + house_x[0], upperLevel_y + 7, pos.z + house_z[6],
-        pos.x + house_x[-1], upperLevel_y + 7, pos.z + house_z[6],
-        capstone
+    # Set the CAPSTONE
+    MC.setBlocks(
+        POS.x + HOUSE_X[0], upper_level_y + 7, POS.z + HOUSE_Z[6],
+        POS.x + HOUSE_X[-1], upper_level_y + 7, POS.z + HOUSE_Z[6],
+        CAPSTONE
         )
 
 
 def interior_torches():
-    # Set the interior torches
-    torch_y = floor_y + 3
-    northWallTorch = block.TORCH.id, 1
-    mc.setBlock(
-         pos.x + house_x[4] -5, torch_y, pos.z, northWallTorch
-         )
+    ''' Set the interior torches '''
+    torch_y = FLOOR_Y + 3
+    wall_torch_n = block.TORCH.id, 1
+    MC.setBlock(
+        POS.x + HOUSE_X[4] - 5, torch_y, POS.z, wall_torch_n
+        )
 
 
 clear_space()
