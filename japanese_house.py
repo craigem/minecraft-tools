@@ -18,6 +18,7 @@ HOUSE_Z = list(range(-1, 12))
 # Floor
 GROUNDS_Y = POS.y - 1
 FLOOR_Y = POS.y
+LOWER_ROOF_Y = FLOOR_Y + 4
 VERANDAH_SIZE = 1
 
 # Set blocks
@@ -33,6 +34,9 @@ ROOF_STAIRS_NORTH = block.STAIRS_WOOD.id, 3
 ROOF_SLAB = block.WOODEN_SLAB.id
 ROOF_CORNERS = block.DOUBLE_WOODEN_SLAB.id, 0
 CAPSTONE = block.STONE_SLAB.id, 0
+LIGHT_POST = block.FENCE.id
+EXTERIOR_LIGHT = block.GLOWSTONE_BLOCK.id
+EXT_LIGHT_BASE = block.WOODEN_SLAB.id, 8
 
 
 def clear_space():
@@ -218,105 +222,104 @@ def verandah_stairs():
 
 def lower_roof():
     ''' Build the lower roof '''
-    lower_roof_y = FLOOR_Y + 4
     # Inner row
     # Set a wood block on each corner
     # North West corner
     MC.setBlock(
-        POS.x + HOUSE_X[0] - 1, lower_roof_y, POS.z + HOUSE_Z[0] - 1,
+        POS.x + HOUSE_X[0] - 1, LOWER_ROOF_Y, POS.z + HOUSE_Z[0] - 1,
         ROOF_CORNERS
         )
     # South West corner
     MC.setBlock(
-        POS.x + HOUSE_X[0] - 1, lower_roof_y, POS.z + HOUSE_Z[-1] + 1,
+        POS.x + HOUSE_X[0] - 1, LOWER_ROOF_Y, POS.z + HOUSE_Z[-1] + 1,
         ROOF_CORNERS
         )
     # North East corner
     MC.setBlock(
-        POS.x + HOUSE_X[-1] + 1, lower_roof_y, POS.z + HOUSE_Z[0] - 1,
+        POS.x + HOUSE_X[-1] + 1, LOWER_ROOF_Y, POS.z + HOUSE_Z[0] - 1,
         ROOF_CORNERS
         )
     # South East corner
     MC.setBlock(
-        POS.x + HOUSE_X[-1] + 1, lower_roof_y, POS.z + HOUSE_Z[-1] + 1,
+        POS.x + HOUSE_X[-1] + 1, LOWER_ROOF_Y, POS.z + HOUSE_Z[-1] + 1,
         ROOF_CORNERS
         )
     # Set outward facing stairs in between
     # Western roofing stairs
     MC.setBlocks(
-        POS.x + HOUSE_X[0] - 1, lower_roof_y, POS.z + HOUSE_Z[0],
-        POS.x + HOUSE_X[0] - 1, lower_roof_y, POS.z + HOUSE_Z[-1],
+        POS.x + HOUSE_X[0] - 1, LOWER_ROOF_Y, POS.z + HOUSE_Z[0],
+        POS.x + HOUSE_X[0] - 1, LOWER_ROOF_Y, POS.z + HOUSE_Z[-1],
         ROOF_STAIRS_WEST
         )
     # Northern roofing stairs
     MC.setBlocks(
-        POS.x + HOUSE_X[0], lower_roof_y, POS.z + HOUSE_Z[0] - 1,
-        POS.x + HOUSE_X[-1], lower_roof_y, POS.z + HOUSE_Z[0] - 1,
+        POS.x + HOUSE_X[0], LOWER_ROOF_Y, POS.z + HOUSE_Z[0] - 1,
+        POS.x + HOUSE_X[-1], LOWER_ROOF_Y, POS.z + HOUSE_Z[0] - 1,
         ROOF_STAIRS_NORTH
         )
     # Eastern roofing stairs
     MC.setBlocks(
-        POS.x + HOUSE_X[-1] + 1, lower_roof_y, POS.z + HOUSE_Z[0],
-        POS.x + HOUSE_X[-1] + 1, lower_roof_y, POS.z + HOUSE_Z[-1],
+        POS.x + HOUSE_X[-1] + 1, LOWER_ROOF_Y, POS.z + HOUSE_Z[0],
+        POS.x + HOUSE_X[-1] + 1, LOWER_ROOF_Y, POS.z + HOUSE_Z[-1],
         ROOF_STAIRS_EAST
         )
     # Southern roofing stairs
     MC.setBlocks(
-        POS.x + HOUSE_X[0], lower_roof_y, POS.z + HOUSE_Z[-1] + 1,
-        POS.x + HOUSE_X[-1], lower_roof_y, POS.z + HOUSE_Z[-1] + 1,
+        POS.x + HOUSE_X[0], LOWER_ROOF_Y, POS.z + HOUSE_Z[-1] + 1,
+        POS.x + HOUSE_X[-1], LOWER_ROOF_Y, POS.z + HOUSE_Z[-1] + 1,
         ROOF_STAIRS_SOUTH
         )
     # Middle row
     # Set a wood block on each corner
     # North West corner
     MC.setBlock(
-        POS.x + HOUSE_X[0] - 2, lower_roof_y, POS.z + HOUSE_Z[0] - 2,
+        POS.x + HOUSE_X[0] - 2, LOWER_ROOF_Y, POS.z + HOUSE_Z[0] - 2,
         ROOF_CORNERS
         )
     # South West corner
     MC.setBlock(
-        POS.x + HOUSE_X[0] - 2, lower_roof_y, POS.z + HOUSE_Z[-1] + 2,
+        POS.x + HOUSE_X[0] - 2, LOWER_ROOF_Y, POS.z + HOUSE_Z[-1] + 2,
         ROOF_CORNERS
         )
     # North East corner
     MC.setBlock(
-        POS.x + HOUSE_X[-1] + 2, lower_roof_y, POS.z + HOUSE_Z[0] - 2,
+        POS.x + HOUSE_X[-1] + 2, LOWER_ROOF_Y, POS.z + HOUSE_Z[0] - 2,
         ROOF_CORNERS
         )
     # South East corner
     MC.setBlock(
-        POS.x + HOUSE_X[-1] + 2, lower_roof_y, POS.z + HOUSE_Z[-1] + 2,
+        POS.x + HOUSE_X[-1] + 2, LOWER_ROOF_Y, POS.z + HOUSE_Z[-1] + 2,
         ROOF_CORNERS
         )
     # Set single wood slabs in between
     # Western roofing slabs
     MC.setBlocks(
-        POS.x + HOUSE_X[0] - 2, lower_roof_y, POS.z + HOUSE_Z[0] - 1,
-        POS.x + HOUSE_X[0] - 2, lower_roof_y, POS.z + HOUSE_Z[-1] + 1,
+        POS.x + HOUSE_X[0] - 2, LOWER_ROOF_Y, POS.z + HOUSE_Z[0] - 1,
+        POS.x + HOUSE_X[0] - 2, LOWER_ROOF_Y, POS.z + HOUSE_Z[-1] + 1,
         ROOF_SLAB
         )
     # Northern roofing slabs
     MC.setBlocks(
-        POS.x + HOUSE_X[0] - 1, lower_roof_y, POS.z + HOUSE_Z[0] - 2,
-        POS.x + HOUSE_X[-1] + 1, lower_roof_y, POS.z + HOUSE_Z[0] - 2,
+        POS.x + HOUSE_X[0] - 1, LOWER_ROOF_Y, POS.z + HOUSE_Z[0] - 2,
+        POS.x + HOUSE_X[-1] + 1, LOWER_ROOF_Y, POS.z + HOUSE_Z[0] - 2,
         ROOF_SLAB
         )
     # Eastern roofing slabs
     MC.setBlocks(
-        POS.x + HOUSE_X[-1] + 2, lower_roof_y, POS.z + HOUSE_Z[0] - 1,
-        POS.x + HOUSE_X[-1] + 2, lower_roof_y, POS.z + HOUSE_Z[-1] + 1,
+        POS.x + HOUSE_X[-1] + 2, LOWER_ROOF_Y, POS.z + HOUSE_Z[0] - 1,
+        POS.x + HOUSE_X[-1] + 2, LOWER_ROOF_Y, POS.z + HOUSE_Z[-1] + 1,
         ROOF_SLAB
         )
     # Southern roofing slabs
     MC.setBlocks(
-        POS.x + HOUSE_X[0] - 1, lower_roof_y, POS.z + HOUSE_Z[-1] + 2,
-        POS.x + HOUSE_X[-1] + 1, lower_roof_y, POS.z + HOUSE_Z[-1] + 2,
+        POS.x + HOUSE_X[0] - 1, LOWER_ROOF_Y, POS.z + HOUSE_Z[-1] + 2,
+        POS.x + HOUSE_X[-1] + 1, LOWER_ROOF_Y, POS.z + HOUSE_Z[-1] + 2,
         ROOF_SLAB
         )
     # Upper row
     # Set a wood block on each corner
     # North West corner
-    upper_row_y = lower_roof_y + 1
+    upper_row_y = LOWER_ROOF_Y + 1
     MC.setBlock(
         POS.x + HOUSE_X[0], upper_row_y, POS.z + HOUSE_Z[0],
         ROOF_SLAB
@@ -536,6 +539,54 @@ def upper_level():
         )
 
 
+def exterior_lights():
+    ''' Build and place the exterior lights '''
+    # North West corner
+    # Set the light post
+    MC.setBlock(
+        POS.x + HOUSE_X[0] - 2, LOWER_ROOF_Y - 1, POS.z + HOUSE_Z[0] - 2,
+        LIGHT_POST
+        )
+    # Set the light
+    MC.setBlock(
+        POS.x + HOUSE_X[0] - 2, LOWER_ROOF_Y - 2, POS.z + HOUSE_Z[0] - 2,
+        EXTERIOR_LIGHT
+        )
+    # South West corner
+    # Set the light post
+    MC.setBlock(
+        POS.x + HOUSE_X[0] - 2, LOWER_ROOF_Y - 1, POS.z + HOUSE_Z[-1] + 2,
+        LIGHT_POST
+        )
+    # Set the light
+    MC.setBlock(
+        POS.x + HOUSE_X[0] - 2, LOWER_ROOF_Y - 2, POS.z + HOUSE_Z[-1] + 2,
+        EXTERIOR_LIGHT
+        )
+    # North East corner
+    # Set the light post
+    MC.setBlock(
+        POS.x + HOUSE_X[-1] + 2, LOWER_ROOF_Y - 1, POS.z + HOUSE_Z[0] - 2,
+        LIGHT_POST
+        )
+    # Set the light
+    MC.setBlock(
+        POS.x + HOUSE_X[-1] + 2, LOWER_ROOF_Y - 2, POS.z + HOUSE_Z[0] - 2,
+        EXTERIOR_LIGHT
+        )
+    # South East corner
+    # Set the light post
+    MC.setBlock(
+        POS.x + HOUSE_X[-1] + 2, LOWER_ROOF_Y - 1, POS.z + HOUSE_Z[-1] + 2,
+        LIGHT_POST
+        )
+    # Set the light
+    MC.setBlock(
+        POS.x + HOUSE_X[-1] + 2, LOWER_ROOF_Y - 2, POS.z + HOUSE_Z[-1] + 2,
+        EXTERIOR_LIGHT
+        )
+
+
 def interior_torches():
     ''' Set the interior torches '''
     torch_y = FLOOR_Y + 3
@@ -553,5 +604,6 @@ house_posts()
 wall_panels()
 lower_roof()
 upper_level()
+exterior_lights()
 interior_torches()
 door()
