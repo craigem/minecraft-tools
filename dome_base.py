@@ -61,8 +61,10 @@ def build_dome():
                         )
                 # Clear the space with an air block
                 elif plot < (RADIUS - 1) ** 2:
-                    MC.setBlock(
-                        POS.x + x_plot, POS.y + y_plot, POS.z + z_plot, AIR
+                    MC.setBlocks(
+                        POS.x + x_plot, POS.y + y_plot, POS.z + z_plot,
+                        POS.x, POS.y, POS.z,
+                        AIR
                         )
 
 
