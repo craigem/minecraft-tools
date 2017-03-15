@@ -37,6 +37,13 @@ def build_dome():
                         POS.x + x_plot, POS.y + y_plot, POS.z + z_plot,
                         DOME_GROUND
                         )
+                # Set the lower level of the wall
+                if y_plot == - 1:
+                    if plot > (RADIUS - 1) ** 2 and plot < RADIUS ** 2:
+                        MC.setBlock(
+                            POS.x + x_plot, POS.y + y_plot, POS.z + z_plot,
+                            DOME_WALL
+                            )
                 # Set the subterranean blocks
                 elif plot < RADIUS ** 2:
                     MC.setBlock(
