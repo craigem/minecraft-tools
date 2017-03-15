@@ -31,7 +31,7 @@ def build_dome():
             for y_plot in range(-RADIUS, 0):
                 plot = x_plot ** 2 + y_plot ** 2 + z_plot ** 2
                 # Set the ground blocks
-                if plot < (RADIUS - 1) ** 2 and y_plot == -1:
+                if plot < (RADIUS - 1) ** 2 and y_plot == - 1:
                     MC.setBlock(
                         POS.x + x_plot, POS.y + y_plot, POS.z + z_plot,
                         DOME_GROUND
@@ -51,7 +51,7 @@ def build_dome():
                         POS.x + x_plot, POS.y + y_plot, POS.z + z_plot, AIR
                         )
                 # Build the dome
-                elif plot > (RADIUS -1) ** 2 and plot < RADIUS ** 2:
+                elif plot > (RADIUS - 1) ** 2 and plot < RADIUS ** 2:
                     MC.setBlock(
                         POS.x + x_plot, POS.y + y_plot, POS.z + z_plot, GLASS
                         )
