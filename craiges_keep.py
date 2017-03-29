@@ -36,6 +36,7 @@ def createwalls(size, baseheight, height, material, battlements, walkway, stairs
         block.BEDROCK.id
         )
 
+    # Make some stairs, if you want.
     if stairs is True:
         createstairs(size, baseheight)
 
@@ -331,6 +332,27 @@ def createstreets(size, baseheight):
     # Build the gate streets
     MC.setBlocks(
         -1, baseheight, size - 1, 1, baseheight, 0,
+        block.STONE_BRICK.id
+        )
+    # Build the main streets
+    # East street
+    MC.setBlocks(
+        size - 13, baseheight, size - 13, size - 15, baseheight, -size + 15,
+        block.STONE_BRICK.id
+        )
+    # South street
+    MC.setBlocks(
+        size - 13, baseheight, size - 13, -size + 15, baseheight, size - 15,
+        block.STONE_BRICK.id
+        )
+    # West street
+    MC.setBlocks(
+        -size + 15, baseheight, -size + 15, -size + 13, baseheight, size - 13,
+        block.STONE_BRICK.id
+        )
+    # North street
+    MC.setBlocks(
+        -size + 13, baseheight, -size + 15, size - 13, baseheight, -size + 13,
         block.STONE_BRICK.id
         )
 
