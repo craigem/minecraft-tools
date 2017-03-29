@@ -64,6 +64,7 @@ def createwalls(size, baseheight, height, material, battlements, walkway, stairs
 
     # Add battlements to top edge
     if battlements is True:
+        # Build the bulk of the battlements
         for pos in range(0, (2 * size) + 3):
             MC.setBlocks(
                 (size + 1), baseheight + height + 1, (pos - size - 1),
@@ -85,6 +86,7 @@ def createwalls(size, baseheight, height, material, battlements, walkway, stairs
                 (pos - size - 1), baseheight + height + 2, -size - 1,
                 material
                 )
+        # Set the merlons on the parapet
         for pos in range(0, (2 * size) + 3, 2):
             MC.setBlock(
                 (size + 1), baseheight + height + 3, (pos - size - 1), material
