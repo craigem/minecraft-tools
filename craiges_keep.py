@@ -64,49 +64,79 @@ def createwalls(size, baseheight, height, material, battlements, walkway, stairs
 
     # Add battlements to top edge
     if battlements is True:
-        for pos in range(0, (2 * size) + 1, 2):
-            MC.setBlock(size, baseheight + height + 1, (pos - size), material)
-            MC.setBlock(-size, baseheight + height + 1, (pos - size), material)
-            MC.setBlock((pos - size), baseheight + height + 1, size, material)
-            MC.setBlock((pos - size), baseheight + height + 1, -size, material)
-        # Keep the corner lights on!
-        MC.setBlock(-size, baseheight + height + 2, -size, block.FENCE.id)
-        MC.setBlock(-size, baseheight + height + 2, size, block.FENCE.id)
-        MC.setBlock(size, baseheight + height + 2, -size, block.FENCE.id)
-        MC.setBlock(size, baseheight + height + 2, size, block.FENCE.id)
-        MC.setBlock(
-            -size, baseheight + height + 3, -size, block.GLOWSTONE_BLOCK.id
-            )
-        MC.setBlock(
-            -size, baseheight + height + 3, size, block.GLOWSTONE_BLOCK.id
-            )
-        MC.setBlock(
-            size, baseheight + height + 3, -size, block.GLOWSTONE_BLOCK.id
-            )
-        MC.setBlock(
-            size, baseheight + height + 3, size, block.GLOWSTONE_BLOCK.id
-            )
+        for pos in range(0, (2 * size) + 3):
+            MC.setBlocks(
+                (size + 1), baseheight + height + 1, (pos - size - 1),
+                (size + 1), baseheight + height + 2, (pos - size - 1),
+                material
+                )
+            MC.setBlocks(
+                -size - 1, baseheight + height + 1, (pos - size - 1),
+                -size - 1, baseheight + height + 2, (pos - size - 1),
+                material
+                )
+            MC.setBlocks(
+                (pos - size - 1), baseheight + height + 1, size + 1,
+                (pos - size - 1), baseheight + height + 2, size + 1,
+                material
+                )
+            MC.setBlocks(
+                (pos - size - 1), baseheight + height + 1, -size - 1,
+                (pos - size - 1), baseheight + height + 2, -size - 1,
+                material
+                )
+        for pos in range(0, (2 * size) + 3, 2):
+            MC.setBlock(
+                (size + 1), baseheight + height + 3, (pos - size - 1), material
+                )
+            MC.setBlock(
+                -size - 1, baseheight + height + 3, (pos - size - 1), material
+                )
+            MC.setBlock(
+                (pos - size - 1), baseheight + height + 3, size + 1, material
+                )
+            MC.setBlock(
+                (pos - size - 1), baseheight + height + 3, -size - 1, material
+                )
+        for pos in range(0, (2 * size) + 3, 6):
+            # Would the last person to leave please turn out the enlightenment?
+            MC.setBlock(
+                (size + 1), baseheight + height + 4, (pos - size - 1),
+                block.TORCH.id
+                )
+            MC.setBlock(
+                -size - 1, baseheight + height + 4, (pos - size - 1),
+                block.TORCH.id
+                )
+            MC.setBlock(
+                (pos - size - 1), baseheight + height + 4, size + 1,
+                block.TORCH.id
+                )
+            MC.setBlock(
+                (pos - size - 1), baseheight + height + 4, -size - 1,
+                block.TORCH.id
+                )
 
     # Add wooden walkways
     if walkway is True:
         MC.setBlocks(
-            -size + 1, baseheight + height - 1, size - 1,
-            size - 1, baseheight + height - 1, size - 1,
+            -size, baseheight + height + 1, size - 1,
+            size - 1, baseheight + height + 1, size,
             block.WOOD_PLANKS
             )
         MC.setBlocks(
-            -size + 1, baseheight + height - 1, -size + 1,
-            size - 1, baseheight + height - 1, -size + 1,
+            -size, baseheight + height + 1, -size + 1,
+            size - 1, baseheight + height + 1, -size,
             block.WOOD_PLANKS
             )
         MC.setBlocks(
-            -size + 1, baseheight + height - 1, -size + 1,
-            -size + 1, baseheight + height - 1, size - 1,
+            -size + 1, baseheight + height + 1, -size + 1,
+            -size, baseheight + height + 1, size - 1,
             block.WOOD_PLANKS
             )
         MC.setBlocks(
-            size - 1, baseheight + height - 1, -size + 1,
-            size - 1, baseheight + height - 1, size - 1,
+            size - 1, baseheight + height + 1, -size,
+            size, baseheight + height + 1, size,
             block.WOOD_PLANKS.id
             )
 
