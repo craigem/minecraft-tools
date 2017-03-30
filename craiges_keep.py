@@ -46,48 +46,80 @@ def createwalls(size, baseheight, height, material, battlements, walkway, stairs
         block.GRASS.id
         )
 
+    # North wall
     MC.setBlocks(
-        -size, baseheight, -size, size, baseheight + height, -size,
+        -size, baseheight, -size, size, baseheight + height, -size + 1,
+        material
+        )
+    # West wall
+    MC.setBlocks(
+        -size, baseheight, -size, -size + 1, baseheight + height, size,
+        material
+        )
+    # South wall
+    MC.setBlocks(
+        size, baseheight, size, -size, baseheight + height, size - 1,
         material
         )
     MC.setBlocks(
-        -size, baseheight, -size, -size, baseheight + height, size,
-        material
-        )
-    MC.setBlocks(
-        size, baseheight, size, -size, baseheight + height, size,
-        material
-        )
-    MC.setBlocks(
-        size, baseheight, size, size, baseheight + height, -size,
+        size, baseheight, size, size - 1, baseheight + height, -size,
         material
         )
 
-    # Add battlements to top edge
+    # Add battlements to top edges
     if battlements is True:
         # Build the bulk of the battlements
         for pos in range(0, (2 * size) + 3):
+            # East outer battlements
             MC.setBlocks(
                 (size + 1), baseheight + height + 1, (pos - size - 1),
                 (size + 1), baseheight + height + 2, (pos - size - 1),
                 material
                 )
+            # West outer battlements
             MC.setBlocks(
                 -size - 1, baseheight + height + 1, (pos - size - 1),
                 -size - 1, baseheight + height + 2, (pos - size - 1),
                 material
                 )
+            # South outer battlements
             MC.setBlocks(
                 (pos - size - 1), baseheight + height + 1, size + 1,
                 (pos - size - 1), baseheight + height + 2, size + 1,
                 material
                 )
+            # North outer battlements
             MC.setBlocks(
                 (pos - size - 1), baseheight + height + 1, -size - 1,
                 (pos - size - 1), baseheight + height + 2, -size - 1,
                 material
                 )
-        # Set the merlons on the parapet
+        for pos in range(2, (2 * size) - 1):
+            # East inner battlements
+            MC.setBlocks(
+                (size - 2), baseheight + height + 1, (pos - size),
+                (size - 2), baseheight + height + 2, (pos - size),
+                material
+                )
+            # West inner battlements
+            MC.setBlocks(
+                -size + 2, baseheight + height + 1, (pos - size),
+                -size + 2, baseheight + height + 2, (pos - size),
+                material
+                )
+            # South inner battlements
+            MC.setBlocks(
+                (pos - size), baseheight + height + 1, size - 2,
+                (pos - size), baseheight + height + 2, size - 2,
+                material
+                )
+            # North inner battlements
+            MC.setBlocks(
+                (pos - size), baseheight + height + 1, -size + 2,
+                (pos - size), baseheight + height + 2, -size + 2,
+                material
+                )
+        # Set the merlons on the outer parapet
         for pos in range(0, (2 * size) + 3, 2):
             MC.setBlock(
                 (size + 1), baseheight + height + 3, (pos - size - 1), material
@@ -101,8 +133,22 @@ def createwalls(size, baseheight, height, material, battlements, walkway, stairs
             MC.setBlock(
                 (pos - size - 1), baseheight + height + 3, -size - 1, material
                 )
+        # Set the merlons on the inner parapet
+        for pos in range(2, (2 * size) - 1, 2):
+            MC.setBlock(
+                (size - 2), baseheight + height + 3, (pos - size), material
+                )
+            MC.setBlock(
+                -size + 2, baseheight + height + 3, (pos - size), material
+                )
+            MC.setBlock(
+                (pos - size), baseheight + height + 3, size - 2, material
+                )
+            MC.setBlock(
+                (pos - size), baseheight + height + 3, -size + 2, material
+                )
+        # Would the last person to leave please turn out the enlightenment?
         for pos in range(0, (2 * size) + 3, 6):
-            # Would the last person to leave please turn out the enlightenment?
             MC.setBlock(
                 (size + 1), baseheight + height + 4, (pos - size - 1),
                 block.TORCH.id
@@ -117,6 +163,24 @@ def createwalls(size, baseheight, height, material, battlements, walkway, stairs
                 )
             MC.setBlock(
                 (pos - size - 1), baseheight + height + 4, -size - 1,
+                block.TORCH.id
+                )
+        for pos in range(2, (2 * size) - 1, 6):
+            # Would the last person to leave please turn out the enlightenment?
+            MC.setBlock(
+                (size - 2), baseheight + height + 4, (pos - size),
+                block.TORCH.id
+                )
+            MC.setBlock(
+                -size + 2, baseheight + height + 4, (pos - size),
+                block.TORCH.id
+                )
+            MC.setBlock(
+                (pos - size), baseheight + height + 4, size - 2,
+                block.TORCH.id
+                )
+            MC.setBlock(
+                (pos - size), baseheight + height + 4, -size + 2,
                 block.TORCH.id
                 )
 
@@ -144,7 +208,7 @@ def createwalls(size, baseheight, height, material, battlements, walkway, stairs
             )
 
     # Door
-    MC.setBlocks(0, baseheight + 1, size, 0, baseheight + 2, size, block.AIR)
+    MC.setBlocks(0, baseheight + 1, size, 0, baseheight + 2, size - 1, block.AIR)
     MC.setBlock(0, baseheight + 1, size, block.FENCE_GATE.id)
 
     if streets is True:
@@ -231,17 +295,41 @@ def createwindows(pos_x, pos_y, pos_z, cardinal):
     if cardinal == "N" or cardinal == "S":
         pos_z1 = pos_z
         pos_z2 = pos_z
+        pos_z3 = pos_z
+        pos_z4 = pos_z
         pos_x1 = pos_x - 2
-        pos_x2 = pos_x + 2
+        pos_x2 = pos_x - 2
+        pos_x3 = pos_x + 2
+        pos_x4 = pos_x + 2
+
+    if cardinal == "N":
+        pos_z1 = pos_z - 1
+        pos_z3 = pos_z - 1
+
+    if cardinal == "S":
+        pos_z1 = pos_z + 1
+        pos_z3 = pos_z + 1
 
     if cardinal == "E" or cardinal == "W":
         pos_z1 = pos_z - 2
-        pos_z2 = pos_z + 2
+        pos_z2 = pos_z - 2
+        pos_z3 = pos_z + 2
+        pos_z4 = pos_z + 2
         pos_x1 = pos_x
         pos_x2 = pos_x
+        pos_x3 = pos_x
+        pos_x4 = pos_x
 
-    MC.setBlocks(pos_x1, pos_y, pos_z1, pos_x1, pos_y + 1, pos_z1, block.AIR)
-    MC.setBlocks(pos_x2, pos_y, pos_z2, pos_x2, pos_y + 1, pos_z2, block.AIR)
+    if cardinal == "E":
+        pos_x1 = pos_x - 1
+        pos_x3 = pos_x - 1
+
+    if cardinal == "W":
+        pos_x1 = pos_x + 1
+        pos_x3 = pos_x + 1
+
+    MC.setBlocks(pos_x1, pos_y - 1, pos_z1, pos_x2, pos_y + 1, pos_z2, block.AIR)
+    MC.setBlocks(pos_x3, pos_y - 1, pos_z3, pos_x4, pos_y + 1, pos_z4, block.AIR)
 
     if cardinal == "N":
         facing = 3
@@ -252,8 +340,8 @@ def createwindows(pos_x, pos_y, pos_z, cardinal):
     if cardinal == "E":
         facing = 1
 
-    MC.setBlock(pos_x1, pos_y - 1, pos_z1, 109, facing)
     MC.setBlock(pos_x2, pos_y - 1, pos_z2, 109, facing)
+    MC.setBlock(pos_x4, pos_y - 1, pos_z4, 109, facing)
 
 
 def createstairs(size, baseheight):
@@ -337,22 +425,22 @@ def createstreets(size, baseheight):
     # Build the main streets
     # East street
     MC.setBlocks(
-        size - 13, baseheight, size - 13, size - 15, baseheight, -size + 15,
+        size - 14, baseheight, size - 16, size - 16, baseheight, -size + 16,
         block.STONE_BRICK.id
         )
     # South street
     MC.setBlocks(
-        size - 13, baseheight, size - 13, -size + 15, baseheight, size - 15,
+        size - 14, baseheight, size - 14, -size + 16, baseheight, size - 16,
         block.STONE_BRICK.id
         )
     # West street
     MC.setBlocks(
-        -size + 15, baseheight, -size + 15, -size + 13, baseheight, size - 13,
+        -size + 16, baseheight, -size + 16, -size + 14, baseheight, size - 14,
         block.STONE_BRICK.id
         )
     # North street
     MC.setBlocks(
-        -size + 13, baseheight, -size + 15, size - 13, baseheight, -size + 13,
+        -size + 14, baseheight, -size + 16, size - 14, baseheight, -size + 14,
         block.STONE_BRICK.id
         )
 
