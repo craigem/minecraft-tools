@@ -279,6 +279,15 @@ def createkeep(size, baseheight, levels):
         MC.setBlock(0, (level * 7) + baseheight + 6, 0, block.FENCE.id)
         MC.setBlock(0, (level * 7) + baseheight + 5, 0, block.GLOWSTONE_BLOCK.id)
 
+    # Ladder to reach the top story and all of those in between
+    MC.setBlocks(
+        0, baseheight + 1, -size +2,
+        0, baseheight + 34, -size +2,
+        block.LADDER.id, 0
+        )
+    # Set the last to air
+    MC.setBlock(0, baseheight + 35, -size +2, block.AIR.id)
+
     # Inner gate
     MC.setBlocks(
         0, baseheight + 1, size -18, 0, baseheight + 2, size -18, block.AIR
