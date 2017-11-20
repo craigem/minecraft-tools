@@ -41,6 +41,7 @@ def clear_space():
 
 def build_grounds():
     ''' Build the grounds and gardens '''
+    # Fill in the grounds
     MC.setBlocks(
         GROUNDS_X1,
         GROUNDS_Y,
@@ -52,7 +53,18 @@ def build_grounds():
         )
 
 def build_floor():
-    ''' Build the slab'''
+    ''' Build all the floors '''
+    # Build the slab
+    MC.setBlocks(
+        POS.x + HOUSE_SLAB_X[0],
+        GROUNDS_Y,
+        POS.z + HOUSE_SLAB_Z[0],
+        POS.x + HOUSE_SLAB_X[-1],
+        GROUNDS_Y,
+        POS.z + HOUSE_SLAB_Z[-1],
+        SLAB
+        )
+    # Build the wooden floor
     MC.setBlocks(
         POS.x + HOUSE_SLAB_X[0],
         GROUNDS_Y,
