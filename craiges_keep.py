@@ -454,6 +454,14 @@ def createstreets(size, baseheight):
         )
 
 
+def createhouse1(size, baseheight):
+    ''' Build the first house '''
+    # Set a test block
+    MC.setBlocks(
+        -size + 14, baseheight + 1, -size + 16, size - 14, baseheight, -size + 14,
+        block.WOOD.id
+        )
+
 # --------------------------------------
 
 
@@ -474,6 +482,9 @@ createwalls(33, 9, 8, block.STONE_BRICK, True, True, True, True)
 
 print "Create Keep with 4 levels"
 createkeep(5, 17, 4)
+
+print "Create the first house"
+createhouse1(65, 1)
 
 print "Position player on Keep's walkway"
 MC.player.setPos(0, 75, 4)
