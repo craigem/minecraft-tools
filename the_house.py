@@ -93,7 +93,7 @@ def build_floor():
 
 def build_walls():
     ''' Build all the walls'''
-    # Build the slab walls
+    # Build the house slab walls
     MC.setBlocks(
         POS.x + HOUSE_FLOOR_SLAB_X[0],
         GROUNDS_Y + 1,
@@ -103,7 +103,17 @@ def build_walls():
         POS.z + HOUSE_FLOOR_SLAB_Z[-1],
         HOUSE_FLOOR_SLAB_BLOCK
         )
-    # Clear inside the slab walls
+    # Build the house wood walls
+    MC.setBlocks(
+        POS.x + HOUSE_FLOOR_WOOD_X[0],
+        GROUNDS_Y + 1,
+        POS.z + HOUSE_FLOOR_WOOD_Z[0],
+        POS.x + HOUSE_FLOOR_WOOD_X[-1],
+        GROUNDS_Y + 4,
+        POS.z + HOUSE_FLOOR_WOOD_Z[-1],
+        HOUSE_FLOOR_WOOD_BLOCK
+        )
+    # Clear inside the house slab walls
     MC.setBlocks(
         POS.x + HOUSE_FLOOR_SLAB_X[0] + 1,
         GROUNDS_Y + 1,
@@ -113,7 +123,17 @@ def build_walls():
         POS.z + HOUSE_FLOOR_SLAB_Z[-1] - 1,
         CLEAR
         )
-    # Clear the interior slab wall
+    # Clear inside the house wood walls
+    MC.setBlocks(
+        POS.x + HOUSE_FLOOR_WOOD_X[0] + 1,
+        GROUNDS_Y + 1,
+        POS.z + HOUSE_FLOOR_WOOD_Z[0] + 1,
+        POS.x + HOUSE_FLOOR_WOOD_X[-1] - 1,
+        GROUNDS_Y + 4,
+        POS.z + HOUSE_FLOOR_WOOD_Z[-1] - 1,
+        CLEAR
+        )
+    # Clear the interior house slab wall
     MC.setBlocks(
         POS.x + HOUSE_FLOOR_SLAB_X[0] + 5,
         GROUNDS_Y + 1,
@@ -121,6 +141,16 @@ def build_walls():
         POS.x + HOUSE_FLOOR_SLAB_X[-1] - 1,
         GROUNDS_Y + 4,
         POS.z + HOUSE_FLOOR_SLAB_Z[0] + 8,
+        CLEAR
+        )
+    # Clear the interior house wood wall
+    MC.setBlocks(
+        POS.x + HOUSE_FLOOR_WOOD_X[0] + 1,
+        GROUNDS_Y + 1,
+        POS.z + HOUSE_FLOOR_WOOD_Z[0],
+        POS.x + HOUSE_FLOOR_WOOD_X[-1] - 1,
+        GROUNDS_Y + 4,
+        POS.z + HOUSE_FLOOR_WOOD_Z[0],
         CLEAR
         )
 
