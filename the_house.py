@@ -113,7 +113,16 @@ def build_walls():
         POS.z + HOUSE_FLOOR_SLAB_Z[-1] - 1,
         CLEAR
         )
-
+    # Clear the interior slab wall
+    MC.setBlocks(
+        POS.x + HOUSE_FLOOR_SLAB_X[0] + 5,
+        GROUNDS_Y + 1,
+        POS.z + HOUSE_FLOOR_SLAB_Z[0] + 8,
+        POS.x + HOUSE_FLOOR_SLAB_X[-1] - 1,
+        GROUNDS_Y + 4,
+        POS.z + HOUSE_FLOOR_SLAB_Z[0] + 8,
+        CLEAR
+        )
 
 clear_space()
 build_grounds()
